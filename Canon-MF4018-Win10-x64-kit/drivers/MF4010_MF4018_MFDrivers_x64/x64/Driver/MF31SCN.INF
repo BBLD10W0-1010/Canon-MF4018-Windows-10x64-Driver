@@ -1,0 +1,266 @@
+;
+; MF31SCN.INF  -- Windows Setup File for the MF4010 Series (Windows XP,Vista(64-bit))
+; Copyright (c) CANON INC. 2007
+;
+; InfID: {10984F23-1E55-4986-9A0E-F92D3EAA702F}
+;
+; Last Modified: 05-Feb-2007
+
+[Version]
+Signature="$Windows NT$"
+Class=Image
+ClassGUID={6bdd1fc6-810f-11d0-bec7-08002be2092f}
+
+;  The above GUID is the class GUID for all scanners and MUST NOT change
+Provider=%Msft%
+CatalogFile.NTamd64=MF31SCN.CAT
+DriverVer=03/20/2007, 11.3.0.0
+
+[DestinationDirs]
+DefaultDestDir=11
+CNCDsFiles=10,"twain_32\"%CNCRFN%
+CNCMediaFiles=10,media
+ColorFiles.NT=11,spool\drivers\Color
+
+[ControlFlags]
+;ExcludeFromSelect=*
+
+[Manufacturer]
+%Mfg%=Models,NTamd64.5.1
+
+
+[Models.NTamd64.5.1]
+%LPTENUM\CNC.DeviceDesc%=CNCInstall_XP,USB\VID_04A9&PID_26B4&MI_00
+
+
+;........................................ WinXP(64-bit) section
+[CNCInstall_XP.NTamd64]
+Include=sti.inf
+Needs=STI.USBSection
+SubClass=StillImage
+DeviceType=1
+DeviceSubType=0x1
+DeviceData=CNCDeviceData
+AddReg=CNCAddreg,CNCUSDAddreg_XP
+CopyFiles=WiaFiles,CNCDsFiles,ColorFiles.NT,MPScanLLD,CNCMediaFiles
+ICMProfiles="sRGB Color Space Profile.icm"
+; used for push button event
+Capabilities=0x11
+Events=PushButton.Events
+DriverVer=03/20/2007, 11.3.0.0
+FriendlyName=%CNC.FriendlyName%
+
+
+[CNCInstall_XP.NTamd64.Services]
+Include=sti.inf
+Needs=STI.USBSection.Services
+
+[CNCInstall_XP.NTamd64.CoInstallers]
+CopyFiles = ScanCoInstaller_CopyFiles_x64
+AddReg    = ScanCoInstaller_AddReg_x64
+
+[ScanCoInstaller_CopyFiles_x64]
+cncilsc.dll
+
+[ScanCoInstaller_AddReg_x64]
+HKR,,CoInstallers32,0x00010000,"cncilsc.dll,Coinstaller_EntryPoint"
+
+
+;.......................................... Common Section
+[PushButton.Events]
+PushButtonPushed1=%PushButtonPushed1%,{78F90277-7ACC-4703-A3F9-BDAA32EDFD0A},%ButtonApp%
+
+
+[ColorFiles.NT]
+CNZ005.ICC
+CNFR03.ICC
+
+[CNCDeviceData]
+TwainDS=%CNC.TwainDS%
+SpecialInfo=%CNC.SPInfo%
+DeviceKey=%CNCRFN%
+
+[CNCAddreg]
+HKLM,"%SGDKEY%","DeviceName",,%CNC.MDL%
+HKLM,"%SGDKEY%","SeriesName",,%CNC.SRS%
+HKLM,"%SGDKEY%","Manufacturer",,"Canon Inc."
+HKLM,"%SGDKEY%","ProductFamily",,"TWAIN Scanners"
+HKLM,"%SGDKEY%","ProductName",,%CNC.MDL%
+HKLM,"%SGDKEY%","InstallDirectory",,"%10%\TWAIN_32\%CNCRFN%\"
+HKLM,"%SGDKEY%","DeviceDriver",,"SCANINTF.DLL"
+HKLM,"%SGDKEY%","ProductId",,"MF4010          "
+HKLM,"%SGDKEY%","DataSourcePath",,"%10%\TWAIN_32\%CNCRFN%\cisds.ds"
+HKLM,"%SGDKEY%","TextEnhance",0x00010001,0
+HKLM,"%SGDKEY%","AvailableDriver",0x00010001,1
+HKLM,"%SGDKEY%","HiDefinitionMode",0x00010001,0
+HKLM,"%SGDKEY%","AutoPreview",0x00010001,0
+HKLM,"%SGDKEY%","AutoClose",0x00010001,0
+HKLM,"%SGDKEY%","SavePreview",0x00010001,1
+HKLM,"%SGDKEY%","DriverDate",,"03 2007"
+HKLM,"%SGDKEY%","DriverVersion",,"11.3.0.0.mf05"
+HKLM,"%SGDKEY%","ColorGear",,%CNC.ColorGear%
+HKLM,"%SGDKEY%","ColorMatch Platen",,"CNFR03.ICC"
+HKLM,"%SGDKEY%","SGIPPDEF",,"CNCFR03.DAT"
+HKLM,"%SGDKEY%","Descreen",0x00010001,0
+HKLM,"%SGDKEY%","Unsharp",0x00010001,3
+HKLM,"%SGDKEY%","MultiLimitThreshold",0x00010001,180
+HKLM,"%SGDKEY%","MultiJackUp",0x00010001,9
+HKLM,"%SGDKEY%","MultiTrimJackUp",0x00010001,20
+HKLM,"%SGDKEY%","CardPhotoDistThr",0x00010001,30
+HKLM,"%SGDKEY%","PhotoTrimThr",0x00010001,210
+HKLM,"%SGDKEY%","PhotoRThr",0x00010001,210
+HKLM,"%SGDKEY%","PhotoGThr",0x00010001,210
+HKLM,"%SGDKEY%","PhotoBThr",0x00010001,210
+HKLM,"%SGDKEY%","CardTrimThr",0x00010001,30
+HKLM,"%SGDKEY%","CardRThr",0x00010001,30
+HKLM,"%SGDKEY%","CardGThr",0x00010001,30
+HKLM,"%SGDKEY%","CardBThr",0x00010001,30
+HKLM,"%SGDKEY%","ParWhiteBlackEth",0x00010001,5
+HKLM,"%SGDKEY%","ParWhiteBlackEthDG",0x00010001,5
+HKLM,"%SGDKEY%","ParWhiteBlackSth",0x00010001,35
+HKLM,"%SGDKEY%","ParWhiteBlackVth",0x00010001,10
+HKLM,"%SGDKEY%","ParLabelingHth",0x00010001,30
+HKLM,"%SGDKEY%","ParLabelingLeft",0x00010001,1
+HKLM,"%SGDKEY%","ParLabelingTop",0x00010001,1
+HKLM,"%SGDKEY%","ParLabelingRight",0x00010001,1
+HKLM,"%SGDKEY%","ParLabelingBottom",0x00010001,1
+HKLM,"%SGDKEY%","DT_Left",,"10"
+HKLM,"%SGDKEY%","DT_Top",,"0"
+HKLM,"%SGDKEY%","DT_Width"	,,"1.5"
+HKLM,"%SGDKEY%","DT_Length",,"4.5"
+HKLM,"%SGDKEY%","DT_Border_1",,"2.5"
+HKLM,"%SGDKEY%","DT_Border_2",,"3.5"
+HKLM,"%SGDKEY%","DT_BkTh",,"18"
+HKLM,"%SGDKEY%","DT_MinWhThr",,"15"
+HKLM,"%SGDKEY%","DT_MaxWhThr",,"45"
+HKLM,"%SGDKEY%","ButtonNum",0x00010001,1
+HKLM,"%STIKEY%","MF4010",0x00010001,1
+
+[CNCUSDAddreg_XP]
+HKLM,"%WIASGDKEY%","ColorMatch",0x00010001,1
+HKLM,"%WIASGDKEY%","ColorGear",,"%CNC.ColorGear%"
+HKLM,"%WIASGDKEY%","TextEnhance",0x00010001,0
+HKLM,"%WIASGDKEY%","Descreen",0x00010001,0
+HKLM,"%WIASGDKEY%","UnsharpMask",0x00010001,0
+HKLM,"%WIASGDKEY%","HiDefinitionMode",0x00010001,0
+HKLM,"%WIASGDKEY%","ProductId",,"MF4010          "
+HKLM,"%WIASGDKEY%","ButtonNum",0x00010001,1
+HKLM,"%WIASGDKEY%","DspGamma",0x00010001,1
+HKLM,"%WIASTIKEY%","MF4010",0x00010001,1
+HKR,,USDClass,,"{79A59084-AC6C-4e15-BB8C-97EF09230050}"
+HKCR,CLSID\{79A59084-AC6C-4e15-BB8C-97EF09230050},,,"Canon USD"
+HKCR,CLSID\{79A59084-AC6C-4e15-BB8C-97EF09230050}\InProcServer32,,,%11%\CNCC4010.DLL
+HKCR,CLSID\{79A59084-AC6C-4e15-BB8C-97EF09230050}\InProcServer32,ThreadingModel,,"Both"
+;  The above GUID is specific to MF4010 and MUST change for a different model.
+
+[WiaFiles]
+CNCC4010.DLL
+CNCI4010.DLL
+CNCL4010.DLL
+
+[CNCDsFiles]
+CISDS.DS
+SGUI.DLL
+SGUI_RES.DLL
+WIARES.DLL
+IOP.DLL
+ITLIB32.DLL
+SCANINTF.DLL
+SCRPRMV.DLL
+TPM.DLL
+CNCFR03.DAT
+MC2.TXT
+JDA_CIMG.DLL
+NBS4MB.DLL
+NBSCOR4M.DLL
+RMSLANTC.DLL
+RSTCOL.DLL
+BaLCo.dll
+CFine2.dll
+libBLC.dll
+
+[MPScanLLD]
+CNCMFP31.INI,,,0x20
+CNCLSI31.DLL,,,0x20
+CNCLSD31.DLL,,,0x20
+CNCLSC31.DLL,,,0x20
+CNCLST31.DLL,,,0x20
+CNCLSU31.DLL,,,0x20
+
+[CNCMediaFiles]
+CSSAMP1.MID
+
+;-------------------------------Source Index
+[SourceDisksFiles]
+CNZ005.ICC=1
+ITLIB32.DLL=1
+JDA_CIMG.DLL=1
+MSVCRT.DLL=1
+NBS4MB.DLL=1
+NBSCOR4M.DLL=1
+RMSLANTC.DLL=1
+RSTCOL.DLL=1
+BaLCo.dll=1
+CFine2.dll=1
+libBLC.dll=1
+
+CISDS.DS=1
+SGUI.DLL=1
+IOP.DLL=1
+SCANINTF.DLL=1
+SCRPRMV.DLL=1
+TPM.DLL=1
+
+SGUI_RES.DLL=1
+WIARES.DLL=1
+
+CSSAMP1.MID=1
+
+CNCFR03.DAT=1
+CNFR03.ICC=1
+
+MC2.TXT=1
+
+CNCC4010.DLL=1
+CNCI4010.DLL=1
+CNCL4010.DLL=1
+
+CNCMFP31.INI=1
+CNCLSI31.DLL=1
+CNCLSD31.DLL=1
+CNCLSC31.DLL=1
+CNCLST31.DLL=1
+CNCLSU31.DLL=1
+
+
+CNCILSC.DLL =1
+
+
+[SourceDisksNames]
+1=%D1%,scan.cab,
+
+;-------------------------------String Aliases
+[Strings]
+Msft="Canon"
+Mfg="Canon"
+SGDKEY="Software\Wow6432Node\Canon\SateraMFP1\ScanGear\11.3\Devices\MF4010"
+STIKEY="Software\Wow6432Node\Canon\SateraMFP1\ScanGear\STI"
+WIASGDKEY="Software\Canon\SateraMFP1\WIA\1.2\Devices\MF4010"
+WIASTIKEY="Software\Canon\SateraMFP1\WIA\STI"
+D1="Canon MF4010 Series Setup Disk"
+LPTENUM\CNC.DeviceDesc="Canon MF4010 Series"
+ButtonApp        = "MF Toolbox Ver4.9"
+CNCRFN           = "MF4010"
+CNC.MDL          = "Canon MF4010"
+CNC.SRS          = "Canon MF4010 Series"
+CNC.DeviceDesc   = "Canon MF4010"
+CNC.SPInfo       = "Canon MF4010 Scanner"
+CNC.TwainDS      = "Canon MF4010 Series"
+CNC.ColorGear    = "FR03"
+PushButtonPushed1= "File"
+PushButtonPushed2= "PDF"
+PushButtonPushed3= "Email"
+PushButtonPushed4= "App."
+PushButtonPushed5= "Film Preview"
+CNC.FriendlyName     = "WIA Canon MF4010 Series"
+
